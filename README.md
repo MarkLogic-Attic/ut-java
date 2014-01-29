@@ -1,3 +1,17 @@
+# Exercise Instructions
+
+0. Create a MarkLogic database and attach a REST API instance running on port `8009`.
+1. Load the [email data](http://developer.marklogic.com/download/code/ut-java/email.zip) into the Database.  Make sure each email message is assigned a URI that starts with `/mail` and matches the filename sources. For example, `/mail/zrjwjnpkev2zbzxt.xml`.
+2. Implement the 3 endpoints described in this [spec](#spec).
+3. Deploy the endpoints in an HTTP server (e.g., Tomcat or your preference) running on port `8080`. 
+4. Run the unit tests in any manner you see fit. Via maven, you can simply do this, 
+   by specifying the `baseURI` and `basePath` to your HTTP API, via properties like: 
+  
+  		% mvn test '-DbaseURI=http://localhost:8080' '-DbasePath=/ut-java' 
+
+5. After the tests succeed, try deploying, configuring, and running the provided [webapp](https://github.com/marklogic/ut-java/tree/master/src/main/webapp) as well.  You can find it in the ut-java repo aside the unit tests.
+
+<a name="spec"></a>
 # HTTP APIs
 
 There are 3 APIs to implement:
