@@ -36,10 +36,9 @@ public class ApiTest extends TestCase {
 
 		@Override
 		public void setUp() {
-			
-			// TODO: bring in system properties for connection details
-			
-			RestAssured.basePath = "/exercise-1";
+						
+			RestAssured.basePath = System.getProperty("basePath", "/exercise-1");
+			RestAssured.baseURI = System.getProperty("baseURI", "http://localhost:8080");
 		}
 		
 		@Override
