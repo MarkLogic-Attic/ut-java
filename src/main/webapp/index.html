@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<link href="css/app.css" rel="stylesheet" type="text/css"  />
+	
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="js/app.js"></script>
+</head>
+<body ng-controller="queryCtrl">
+	<div>
+		<h2>ACME Email Tagging Tool</h2>
+		<input id="query" type="text" value="" name="query"
+			placeholder="Search" on-enter="search()" />
+		<button id="search-button" type="button" ng-click="search()">Search</button>
+		&#160;|&#160;
+		Tag <span ng-show="selectedCount">{{selectedCount}}</span> selected messages with text: <input id="tag-text" type="text" value="" name="tag-text"
+			on-enter="tag()" />
+		<button id="tag-button" type="button" ng-click="tag()" ng-disabled="!selectedCount">Tag</button>
+		<img id="spinner" src="images/ajax-loader.gif" width="16" height="16" ng-show="isAnnotating"/>
+		<span class="summary" ng-show="tags">{{tags}} messages tagged</span>
+	</div>
+	<div id="bottom">
+ 		<div id="facetdiv">
+ 			<ul id="facets">
+ 				<li class="facet" ng-repeat="facet in facets">
+ 					<span ng-show="facet.values.length">{{facet.name}}</span>
+ 					<ul class="facet-values">
+ 						<li class="facet-value>" ng-repeat="value in facet.values | orderBy:label">
+ 							<a href="#" ng-click="unimplemented()">{{value.label}}</a> ({{value.count}})
+						</li>
+ 					</ul>
+ 				</li>
+ 				
+ 			</ul>
+ 		</div>
+ 		<div id="resultdiv">
+ 			<img id="spinner" src="images/ajax-loader.gif" width="16" height="16" ng-show="isSearching"/>
+ 			<span class="summary" ng-show="total">{{total}} hits</span>
+ 			<div id="no-results"  ng-hide="total">No results</div>
+ 			
+ 			<ul id="results" when-scrolled="scroll()">
+			<li class="result" ng-repeat="result in results track by $index">
+				<input type="checkbox" name="selected" ng-click="updateSelection($event, result.uri)"/>
+				<a href="#" ng-click="showMessage(result.uri)"><!--{{$index}} {{result.uri}}--> {{result.subj}} </a><br />
+				<div class="snippet">{{result.snippet}}</div>
+				<div class="deets">
+					<span>{{result.date}}</span>&#160; <span>{{result.pers}}</span>&#160;&lt;{{result.from}}&gt;&#160;
+					<span>{{result.list}}</span>&#160;
+				</div>
+				<div><span class="tag" ng-repeat="tag in result.tags">{{tag}}</span></div>
+			</li>
+		</ul>
+		</div>
+		<img id="spinner" src="images/ajax-loader.gif" width="16" height="16" ng-show="isScrolling"/>
+	</div>
+	<div id="message" ng-show="message">
+	<button id="close" ng-click="message = ''">Close</button>
+		<div>
+		<span>From:</span> <span>{{message.from}}</span><br/>
+		<span>Subject:</span> <span>{{message.subject}}</span><br/>
+		<span>Date:</span> <span>{{message.date}}</span><br/>
+		<span>List:</span> <span>{{message.list}}</span><br/>
+		<span>Tags:</span> <span class="tag" ng-repeat="tag in message.tags">{{tag}} </span><br/><br/>
+		<pre>{{message.body}}</pre>
+		</div>
+	</div>
+</body>
+</html>
