@@ -23,7 +23,8 @@ import static org.hamcrest.Matchers.not;
 
 
 /**
- * Some very basic API tests that are dependent on the default data set of 1862 email messages.
+ * Basic API tests that are dependent on the default data set of 1862 email messages, 
+ * available from http://developer.marklogic.com/download/code/ut-java/email.zip
  * 
  * Tests are designed to be idempotent and not to break given any early tagging (there is some
  * possibility that making tags with words that are used as search terms in the test could cause issues).
