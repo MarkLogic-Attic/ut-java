@@ -1,4 +1,4 @@
-# Exercise 1 - HTTP APIs
+# HTTP APIs
 
 There are 3 APIs to implement:
 
