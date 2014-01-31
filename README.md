@@ -42,8 +42,9 @@ There are 3 APIs to implement:
 	
     - Content-type: application/json
     - Status code: 200
-    - Response body with the followings fields (`subject`, `list`, `from`, `date`, `body`. and `tags`) 
-     from message extracted and encoded as JSON Object.  Sample response:
+    - Response body with the followings fields (subject, list, from, date, body. and tags) 
+     from message extracted and encoded as JSON Object as this sample response:
+     
         {
             "subject": "Subject of my email is...",
             "list": "org.apache.http-client.",
