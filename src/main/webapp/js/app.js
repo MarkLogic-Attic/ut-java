@@ -1,8 +1,11 @@
 var app = angular.module('app', []);
-
 var page = 1;
 
+// Can set to empty string (or other relative URL) if API is provided as part of webapp
+var baseURI = "http://localhost:8080/exercise-1/";
+
 app.controller('queryCtrl', function($scope, $http) {
+	
 	$scope.results = [];
 	$scope.selected = {};
 	$scope.selectedCount = 0;
@@ -12,7 +15,7 @@ app.controller('queryCtrl', function($scope, $http) {
 		page = 1;
 		$scope.results = [];
 		$scope.isSearching = true;
-		$http.get('search?q=' + encodeURIComponent($('#query').val()) + '&p=' + page).success(
+		$http.get(baseURI + 'search?q=' + encodeURIComponent($('#query').val()) + '&p=' + page).success(
 			function(data) {
 				$scope.isSearching = false;
 				$scope.results = data.results;
@@ -31,7 +34,7 @@ app.controller('queryCtrl', function($scope, $http) {
 			return;
 		
 		$scope.isScrolling = true;
-		$http.get('search?q=' + encodeURIComponent($('#query').val()) + '&p=' + page).success(
+		$http.get(baseURI + 'search?q=' + encodeURIComponent($('#query').val()) + '&p=' + page).success(
 			function(data) {
 				$scope.isScrolling = false;
 				for ( var i = 0; i < data.results.length; i++) {
@@ -64,7 +67,7 @@ app.controller('queryCtrl', function($scope, $http) {
 			return;
 
 		$scope.isTagging = true;
-		$http.post('tag?t=' + encodeURIComponent($('#tag-text').val()),
+		$http.post(baseURI + 'tag?t=' + encodeURIComponent($('#tag-text').val()),
 			Object.keys($scope.selected)).success(function(data) {
 			$scope.isTagging = false;
 			$scope.tags = data.count;
@@ -77,7 +80,7 @@ app.controller('queryCtrl', function($scope, $http) {
 	};
 
 	$scope.showMessage = function(uri) {
-		$http.get('message' + uri).success(function(data) {
+		$http.get(baseURI + 'message' + uri).success(function(data) {
 			$scope.message = data;
 		}).error(function() {
 			alert("Can't fetch " + uri);
