@@ -1,3 +1,17 @@
+# Exercise Instructions
+
+0. Create a MarkLogic database and attach a REST API instance running on port `8009`.
+1. Load the [email data](http://developer.marklogic.com/download/code/ut-java/email.zip) into the Database.  Make sure each email message is assigned a URI that starts with `/mail` and matches the filename sources. For example, `/mail/zrjwjnpkev2zbzxt.xml`.
+2. Implement the 3 endpoints described in this [spec](#spec).
+3. Deploy the endpoints in an HTTP server (e.g., Tomcat or your preference) running on port `8080`. 
+4. Run the unit tests in any manner you see fit. Via maven, you can simply do this, 
+   by specifying the `baseURI` and `basePath` to your HTTP API, via properties like: 
+  
+  		% mvn test '-DbaseURI=http://localhost:8080' '-DbasePath=/ut-java' 
+
+5. After the tests succeed, try deploying, configuring, and running the provided [webapp](https://github.com/marklogic/ut-java/tree/master/src/main/webapp) as well.  
+
+<a name="spec"></a>
 # HTTP APIs
 
 There are 3 APIs to implement:
@@ -28,13 +42,15 @@ There are 3 APIs to implement:
 	
     - Content-type: application/json
     - Status code: 200
-    - Message encoded as JSON Object.  Sample response:
+    - Response body with the followings fields (subject, list, from, date, body. and tags) 
+     from message extracted and encoded as JSON Object as this sample response:
+     
         {
             "subject": "Subject of my email is...",
             "list": "org.apache.http-client.",
             "from": "foo@bar.com",
             "date": "2010-02-16",
-            "tags": [ "silly" ]
+            "tags": [ "silly" ],
             "body": "My email is blah blah ...."
         }
 
@@ -109,7 +125,8 @@ There are 3 APIs to implement:
     an element to the document for the tag, if it does not already exist.
     Tag them all transactionally.  Either all messages are tagged or none.
     
-    For example, for a tag of "foo", add `<tag>foo</tag>` as a child of the `<message>` 	element for all provided message URIs.
+    For example, for a tag of "foo", add `<tag>foo</tag>` as a child of the `<message>` 
+    element for all provided message URIs.
 
 #### Request
 
