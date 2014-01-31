@@ -10,6 +10,7 @@
   		% mvn test '-DbaseURI=http://localhost:8080' '-DbasePath=/ut-java' 
 
 5. After the tests succeed, try deploying, configuring, and running the provided [webapp](https://github.com/marklogic/ut-java/tree/master/src/main/webapp) as well.  
+You can edit `webapp/js/app.js` to configure the baseURI of your endpoints.
 
 <a name="spec"></a>
 # HTTP APIs
